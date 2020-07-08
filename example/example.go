@@ -9,7 +9,7 @@ import (
 
 func main() {
 	n := 0.0
-	fn := func(t float64) float64 {
+	fn := func(t float64, stepCount int) float64 {
 		x := math.Sin(t*262 + math.Sin(n))
 		n += math.Sin(t)
 

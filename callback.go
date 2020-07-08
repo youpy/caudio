@@ -6,13 +6,13 @@ import (
 )
 
 //export baudio_callback
-func baudio_callback(index C.int, t C.float) C.float {
+func baudio_callback(index C.int, t C.float, stepCount C.int) C.float {
 	fn := lookup(int(index))
 
-	return C.float(fn(float64(t)))
+	return C.float(fn(float64(t), int(stepCount)))
 }
 
-type Callback func(float64) float64
+type Callback func(float64, int) float64
 
 // based on https://github.com/golang/go/wiki/cgo#function-variables
 

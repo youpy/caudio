@@ -8,6 +8,7 @@ package caudio
 typedef struct synthDef {
   UInt32 frameCount;
   int callbackIndex;
+  int stepCount;
 } synthDef;
 
 const int sizeofAURenderCalalbackStruct = sizeof(AURenderCallbackStruct);
@@ -44,6 +45,7 @@ synthDef *createSynthDef(int callbackIndex)
   synthDef *def = malloc(sizeof(synthDef));
 
   def->frameCount = 0;
+  def->stepCount = 0;
   def->callbackIndex = callbackIndex;
 
   return def;
