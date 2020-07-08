@@ -11,8 +11,8 @@ func main() {
 		return math.Sin(800 * t * math.Pi * math.Sin(float64((i/6000)%16)))
 	}
 
-	osc := caudio.New(fn)
-	osc.Start()
+	audio := caudio.New(fn)
+	audio.Start()
 
 	var wait chan bool
 	<-wait

@@ -60,18 +60,19 @@ import (
 	"unsafe"
 )
 
-type Oscillator struct {
+// Audio is responsible for producing the sound using a given callback
+type Audio struct {
 	synthDef *C.struct_synthDef
 }
 
-func New(fn Callback) *Oscillator {
+func _new(fn Callback) *Audio {
 	callbackIndex := register(fn)
 	synthDef := C.createSynthDef(C.int(callbackIndex))
 
-	return &Oscillator{synthDef}
+	return &Audio{synthDef}
 }
 
-func (o *Oscillator) Start() error {
+func (o *Audio) _start() error {
 	var defaultOutputUnit C.AudioUnit
 	var cd C.AudioComponentDescription
 
