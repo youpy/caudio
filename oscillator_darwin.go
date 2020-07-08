@@ -23,20 +23,23 @@ OSStatus RenderCallback(
 {
   synthDef* def = inRefCon;
   float samplingRate = 44100;
-  float timeInSeconds = def->frameCount / samplingRate;
-  float value = baudio_callback(def->callbackIndex, timeInSeconds, def->stepCount);
+  float timeInSeconds;
+  float value;
 
   float *outL = ioData->mBuffers[0].mData;
   float *outR = ioData->mBuffers[1].mData;
 
   int i;
   for (i=0; i< inNumberFrames; i++){
+    timeInSeconds = def->frameCount / samplingRate;
+    value = baudio_callback(def->callbackIndex, timeInSeconds, def->stepCount);
+
     *outL++ = value;
     *outR++ = value;
-  }
 
-  def->frameCount = def->frameCount + inNumberFrames;
-  def->stepCount = def->stepCount + 1;
+    def->frameCount = def->frameCount + 1;
+    def->stepCount = def->stepCount + 1;
+  }
 
   return noErr;
 }

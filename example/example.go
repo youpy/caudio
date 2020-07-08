@@ -19,5 +19,5 @@ func main() {
 	osc := caudio.New(fn)
 	osc.Start()
 
-	time.Sleep(5000 * time.Millisecond)
+	time.Sleep(60000 * time.Millisecond)
 }
