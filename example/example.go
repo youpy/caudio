@@ -2,22 +2,18 @@ package main
 
 import (
 	"math"
-	"time"
 
 	"github.com/youpy/caudio"
 )
 
 func main() {
-	n := 0.0
-	fn := func(t float64, stepCount int) float64 {
-		x := math.Sin(t*262 + math.Sin(n))
-		n += math.Sin(t)
-
-		return x
+	fn := func(t float64, i int) float64 {
+		return math.Sin(800 * t * math.Pi * math.Sin(float64((i/6000)%16)))
 	}
 
 	osc := caudio.New(fn)
 	osc.Start()
 
-	time.Sleep(60000 * time.Millisecond)
+	var wait chan bool
+	<-wait
 }
