@@ -24,7 +24,7 @@ OSStatus RenderCallback(
   synthDef* def = inRefCon;
   float samplingRate = 44100;
   float timeInSeconds = def->frameCount / samplingRate;
-  float value = baudio_callback(def->callbackIndex, timeInSeconds);
+  float value = baudio_callback(def->callbackIndex, timeInSeconds, def->stepCount);
 
   float *outL = ioData->mBuffers[0].mData;
   float *outR = ioData->mBuffers[1].mData;
@@ -36,6 +36,7 @@ OSStatus RenderCallback(
   }
 
   def->frameCount = def->frameCount + inNumberFrames;
+  def->stepCount = def->stepCount + 1;
 
   return noErr;
 }

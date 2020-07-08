@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"math"
 	"time"
 
@@ -10,6 +11,7 @@ import (
 func main() {
 	n := 0.0
 	fn := func(t float64, stepCount int) float64 {
+		log.Print(stepCount)
 		x := math.Sin(t*262 + math.Sin(n))
 		n += math.Sin(t)
 
