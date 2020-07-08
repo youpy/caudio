@@ -9,7 +9,6 @@ typedef struct synthDef {
   UInt32 frameCount;
   int callbackIndex;
   int stepCount;
-  float lastValue;
 } synthDef;
 
 const int sizeofAURenderCalalbackStruct = sizeof(AURenderCallbackStruct);
@@ -24,10 +23,6 @@ OSStatus RenderCallback(
 {
   synthDef* def = inRefCon;
   float samplingRate = 44100;
-
-  // TODO: make fps configurable
-  int framesPerStep = 5;
-
   float timeInSeconds;
   float value;
 
@@ -36,18 +31,14 @@ OSStatus RenderCallback(
 
   int i;
   for (i=0; i< inNumberFrames; i++){
-    if (def->frameCount % framesPerStep == 0) {
-      timeInSeconds = def->frameCount / samplingRate;
-      value = baudio_callback(def->callbackIndex, timeInSeconds, def->stepCount);
+    timeInSeconds = def->frameCount / samplingRate;
+    value = baudio_callback(def->callbackIndex, timeInSeconds, def->stepCount);
 
-      def->lastValue = value;
-      def->stepCount = def->stepCount + 1;
-    }
-
-    *outL++ = def->lastValue;
-    *outR++ = def->lastValue;
+    *outL++ = value;
+    *outR++ = value;
 
     def->frameCount = def->frameCount + 1;
+    def->stepCount = def->stepCount + 1;
   }
 
   return noErr;
@@ -60,7 +51,6 @@ synthDef *createSynthDef(int callbackIndex)
   def->frameCount = 0;
   def->stepCount = 0;
   def->callbackIndex = callbackIndex;
-  def->lastValue = 0.0;
 
   return def;
 }
