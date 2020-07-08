@@ -13,7 +13,7 @@ func baudio_callback(index C.int, t C.float, stepCount C.int) C.float {
 }
 
 // Callback is a function that the user registers with the `Audio` instance to make a sound
-type Callback func(float64, int) float64
+type Callback func(t float64, i int) float64
 
 // based on https://github.com/golang/go/wiki/cgo#function-variables
 
